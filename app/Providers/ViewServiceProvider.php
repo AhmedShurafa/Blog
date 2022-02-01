@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Permission;
 use App\Models\Post;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
@@ -94,6 +95,26 @@ class ViewServiceProvider extends ServiceProvider
                     'recent_comments' =>$recent_comments,
                     'global_categories' =>$global_categories,
                     'global_archives' =>$global_archives,
+                ]);
+
+            });
+        }
+
+
+        if(request()->is('admin/*')){
+
+            Paginator::useBootstrap();
+
+            view()->composer('*',function($view){
+
+                if(!Cache::has('admin_side_menu')){
+
+                    Cache::forever('admin_side_menu', Permission::tree());
+                }
+                $admin_side_menu = Cache::get('admin_side_menu');
+
+                $view->with([
+                    'admin_side_menu' =>$admin_side_menu,
                 ]);
 
             });

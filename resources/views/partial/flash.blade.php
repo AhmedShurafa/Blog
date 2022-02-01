@@ -1,12 +1,10 @@
 
 @if(session('message'))
-    <div class="container">
-        <div class="alert alert-{{ session('alert-type') }} alert-dismissible fade show" id="alert-message" role="alert">
-            {{ session('message') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+    <div class="alert alert-{{ session('alert-type') }} alert-dismissible fade show" id="alert-message" role="alert">
+        {{ session('message') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 @endif
 
@@ -29,7 +27,6 @@
 @endif
 
 @if ($errors->any())
-    <div class="container">
         <div class="alert alert-danger mt-3">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -37,7 +34,6 @@
                 @endforeach
             </ul>
         </div>
-    </div>
 @endif
 
 

@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\Auth as FrontEnd;
-use App\Http\Controllers\Backend\Auth as Backend;
+use App\Http\Controllers\Backend as Backend;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,22 +63,35 @@ Route::group(['middleware' => 'verified'],function(){
     Route::any('user/notifications/read/{id}',           ['as' => 'users.notification.get',  'uses'=>'Frontend\NotificationsController@markAsReadAndRedirect']);
 });
 
-
-
-
 // Authentication Admin Route
-Route::group(['prefix'=>'admin' , 'as'=>'admin.'] , function (){
-    Route::get('/login', [Backend\LoginController::class, 'showLoginForm'])->name('show_login_form');
-    Route::post('login', [Backend\LoginController::class, 'login'])->name('login');
-    Route::post('logout', [Backend\LoginController::class, 'logout'])->name('logout');
-    Route::get('password/reset', [Backend\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-    Route::post('password/email', [Backend\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    Route::get('password/reset/{token}', [Backend\ResetPasswordController::class,'showResetForm'])->name('password.reset');
-    Route::post('password/reset', [Backend\ResetPasswordController::class,'reset'])->name('password.update');
-    Route::get('email/verify', [Backend\VerificationController::class,'show'])->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', [Backend\VerificationController::class,'verify'])->name('verification.verify');
-    Route::post('email/resend', [Backend\VerificationController::class,'veriresendfy'])->name('verification.resend');
+Route::group(['prefix'=>'admin'] , function (){
+    Route::get('/login',                            ['as' => 'admin.show_login_form',        'uses' => 'Backend\Auth\LoginController@showLoginForm']);
+    Route::post('login',                            ['as' => 'admin.login',                  'uses' => 'Backend\Auth\LoginController@login']);
+    Route::post('logout',                           ['as' => 'admin.logout',                 'uses' => 'Backend\Auth\LoginController@logout']);
+    Route::get('password/reset',                    ['as' => 'password.request',             'uses' => 'Backend\Auth\ForgotPasswordController@showLinkRequestForm']);
+    Route::post('password/email',                   ['as' => 'password.email',               'uses' => 'Backend\Auth\ForgotPasswordController@sendResetLinkEmail']);
+    Route::get('password/reset/{token}',            ['as' => 'password.reset',               'uses' => 'Backend\Auth\ResetPasswordController@showResetForm']);
+    Route::post('password/reset',                   ['as' => 'password.update',              'uses' => 'Backend\Auth\ResetPasswordController@reset']);
+
+    Route::group(['middleware' => ['roles','role:admin|editor']] , function (){
+        Route::get('/',               ['as' => 'admin.index_roule',  'uses' => 'Backend\AdminController@index']);
+        Route::get('/index',          ['as' => 'admin.index',        'uses' => 'Backend\AdminController@index']);
+
+
+        Route::post('/post/media/destroy/{media_id}',          ['as' => 'admin.post.media.destroy', 'uses' => 'Backend\PostsController@removeImage']);
+
+        Route::resource('posts',            'Backend\PostsController',          ['as' => 'admin']);
+
+        Route::resource('pages',            'Backend\PagesController',          ['as' => 'admin']);
+        Route::resource('post_comments',    'Backend\PostCommentsController',   ['as' => 'admin']);
+        Route::resource('post_categories',  'Backend\PostCategoriesController', ['as' => 'admin']);
+        Route::resource('users',            'Backend\UsersController',          ['as' => 'admin']);
+        Route::resource('contact_us',       'Backend\ContactUsController',      ['as' => 'admin']);
+        Route::resource('supervisor',       'Backend\SupervisorsController',    ['as' => 'admin']);
+        Route::resource('settings',         'Backend\SettingsController',       ['as' => 'admin']);
+    });
 });
+
 // Contact us
 Route::get('/contact-us' ,      ['as' => 'frontend.contact' , 'uses'=>'Frontend\IndexController@show_contact']);
 Route::post('/contact-us',      ['as' => 'addContact' , 'uses'=>'Frontend\IndexController@addContact']);
@@ -89,11 +102,8 @@ Route::get('/category/{category_slug}',    ['as' => 'frontend.category.posts' , 
 Route::get('/archive/{date}',              ['as' => 'frontend.archive.posts' ,  'uses' => 'Frontend\IndexController@archive']);
 Route::get('/author/{username}',           ['as' => 'frontend.author.posts' ,   'uses' => 'Frontend\IndexController@author']);
 
-
-
-// show page
+// show pages
 Route::get('/{page}',               ['as' => 'page.show' , 'uses'=>'Frontend\IndexController@show_page']);
-
 // show post
 Route::get('post/{post}',           ['as' => 'post.show' ,        'uses'=>'Frontend\IndexController@show_post']);
 Route::post('/post/comment/{slug}', ['as' => 'post.add_comment' , 'uses'=>'Frontend\IndexController@add_comment']);

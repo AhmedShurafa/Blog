@@ -52,7 +52,7 @@
 
                                                 @else
                                                     <span><a href="{{ route('frontend.dashboard') }}">My Dashboard</a></span>
-                                                    <span><a href="{{ route('frontend.logout') }}" onclick="event.preventDefault();
+                                                    <span><a href="javascript:vaoid(0)" onclick="event.preventDefault();
                                                                       document.getElementById('logout-form').submit();">Logout</a></span>
 
                                                      <form id="logout-form" action="{{ route('frontend.logout') }}" method="POST" class="d-none">
