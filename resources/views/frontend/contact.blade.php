@@ -10,7 +10,7 @@
                         <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. </p>
 
 
-                        {!! Form::open(['route'=>'addContact','method'=>'post','id'=>'contact-form']) !!}
+                        {!! Form::open(['route'=>'addContact','method'=>'POST']) !!}
                             <div class="single-contact-form">
                                 {!! Form::text('name', old('name'), ['placeholder'=>'Full Name*']) !!}
                             </div>
