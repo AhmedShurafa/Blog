@@ -16,7 +16,7 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    {{-- @role(['admin']) --}}
+    @role(['admin'])
         @foreach($admin_side_menu as $menu)
             @if (count($menu->appearedChildren) == 0)
                 <span>{{ count($menu->appearedChildren) }}</span>
@@ -45,7 +45,7 @@
                 </li>
             @endif
         @endforeach
-    {{-- @endrole --}}
+    @endrole
 
     @role(['editor'])
     @foreach($admin_side_menu as $menu)

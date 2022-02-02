@@ -46,6 +46,5 @@ class Permission extends EntrustPermission
             ->whereAppear(1)
             ->orderBy('ordering', 'asc')
             ->get();
-            // https://arabicprogrammer.com/article/15531834257/
     }
 }

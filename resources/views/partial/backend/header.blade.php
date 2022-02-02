@@ -10,6 +10,14 @@
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
 
+                @if(auth()->user()->ability('admin','manage_supervisors,show_supervisors'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.supervisors.index') }}">
+                            Supervisors
+                        </a>
+                    </li>
+                @endif
+
               <!-- Nav Item - Search Dropdown (Visible Only XS) -->
 
 

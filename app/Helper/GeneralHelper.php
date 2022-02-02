@@ -20,7 +20,7 @@ function getParentIdOf($param)
 {
     $f    = str_replace('admin.','',$param);
     $perm = Permission::where('as',$f)->first();
-    return $perm ? $perm->id : $f;
+    return $perm ? $perm->id : null;
 }
 
 function getIdMenuOf($param)
