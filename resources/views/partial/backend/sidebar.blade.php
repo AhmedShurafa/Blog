@@ -46,6 +46,14 @@
             @endif
         @endforeach
     @endrole
+    @role(['admin'])
+        <li class="nav-item active">
+            <a href="{{ route('admin.settings.index') }}" class="nav-link">
+                <i class="fas fa-cogs"></i>
+                <span>Setting</span></a>
+        </li>
+    @endrole
+
 
     @role(['editor'])
     @foreach($admin_side_menu as $menu)
