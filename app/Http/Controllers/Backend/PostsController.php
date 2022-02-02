@@ -103,7 +103,7 @@ class PostsController extends Controller
         if($request->images && count($request->images) > 0){
             $i=0;
             foreach($request->images as $file){
-                $filename = $post->slug.'-'.time().$i . $file->getClientOriginalExtension();
+                $filename = $post->slug.'-'.time().$i .'.'. $file->getClientOriginalExtension();
                 $file_size = $file->getSize();
                 $file_type = $file->getMimeType();
                 $path = public_path('assets/posts/'.$filename);

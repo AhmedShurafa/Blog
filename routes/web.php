@@ -82,7 +82,7 @@ Route::group(['prefix'=>'admin'] , function (){
 
         Route::resource('posts',            'Backend\PostsController',          ['as' => 'admin']);
 
-        Route::post('/pages/media/destroy/{media_id}',          ['as' => 'admin.pages.media.destroy', 'uses' => 'Backend\PagesController@removeImage']);
+        Route::post('/pages/media/destroy/{page_id}',          ['as' => 'admin.pages.media.destroy', 'uses' => 'Backend\PagesController@removeImage']);
         Route::resource('pages',            'Backend\PagesController',          ['as' => 'admin']);
 
         Route::resource('post_comments',    'Backend\PostCommentsController',   ['as' => 'admin']);
@@ -90,7 +90,9 @@ Route::group(['prefix'=>'admin'] , function (){
 
         Route::resource('contact_us',       'Backend\ContactUsController',      ['as' => 'admin']);
 
+        Route::post('/users/removeImage',    ['as' => 'admin.users.remove_image', 'uses' => 'Backend\UsersController@removeImage']);
         Route::resource('users',            'Backend\UsersController',          ['as' => 'admin']);
+
         Route::resource('supervisor',       'Backend\SupervisorsController',    ['as' => 'admin']);
         Route::resource('settings',         'Backend\SettingsController',       ['as' => 'admin']);
     });

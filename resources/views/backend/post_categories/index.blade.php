@@ -92,7 +92,7 @@
                                     swal("Comment Deleted Successfully!", {
                                         icon: "success",
                                     });
-                                    window.reload();
+                                    window.location.href = window.location;
                                 }
                             },
                             error: function(x, y, z) {

@@ -8,12 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Mindscms\Entrust\Traits\EntrustUserWithPermissionsTrait;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
     use EntrustUserWithPermissionsTrait;
-
+    use SearchableTrait;
     /**
      * The attributes that are mass assignable.
      *
@@ -40,6 +41,21 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The Search packge.
+     *
+     * @var array<string, string>
+     */
+    protected $searchable= [
+        'columns' => [
+            'users.name'     => 10,
+            'users.username' => 10,
+            'users.email'    => 10,
+            'users.mobile'   => 10,
+            'users.bio'      => 10,
+        ]
+    ];
+
     public function posts()
     {
         return $this->hasMany(Post::class);
@@ -50,9 +66,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Comment::class);
     }
 
-
     public function receivesBroadcastNotificationsOn()
     {
         return 'App.Models.User.'.$this->id;
+    }
+
+    public function status()
+    {
+        return $this->status == 1 ? 'Active' : 'Inactive';
     }
 }

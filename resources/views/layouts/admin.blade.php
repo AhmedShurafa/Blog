@@ -111,7 +111,6 @@
     <script src="{{ asset('backend/js/sb-admin-2.min.js') }}"></script>
     <script src="{{ asset('frontend/js/bootstrap-fileinput/js/plugins/piexif.min.js') }}"></script>
     <script src="{{ asset('frontend/js/bootstrap-fileinput/js/plugins/sortable.min.js') }}"></script>
-    <script src="{{ asset('frontend/js/bootstrap-fileinput/js/plugins/purify.min.js') }}"></script>
 
     <script src="{{ asset('frontend/js/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
     <script src="{{ asset('frontend/js/bootstrap-fileinput/themes/fas/theme.min.js') }}"></script>
