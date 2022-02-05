@@ -57,7 +57,7 @@ Route::group(['middleware' => 'verified'],function(){
     Route::delete('/destroy-comment/{comment_id}' ,       ['as' => 'users.comment.destroy',           'uses'=>'Frontend\UsersController@destroy_comment']);
 
 
-    //notification
+    // User notification
     Route::any('user/notifications/get',                 ['as' => 'users.notification.get',  'uses'=>'Frontend\NotificationsController@getNotifications']);
     Route::any('user/notifications/read',                ['as' => 'users.notification.read',  'uses'=>'Frontend\NotificationsController@markAsRead']);
     Route::any('user/notifications/read/{id}',           ['as' => 'users.notification.get',  'uses'=>'Frontend\NotificationsController@markAsReadAndRedirect']);
@@ -74,6 +74,12 @@ Route::group(['prefix'=>'admin'] , function (){
     Route::post('password/reset',                   ['as' => 'password.update',              'uses' => 'Backend\Auth\ResetPasswordController@reset']);
 
     Route::group(['middleware' => ['roles','role:admin|editor']] , function (){
+        // Admin notification
+        Route::any('notifications/get',        ['uses'=>'Backend\NotificationsController@getNotifications']);
+        Route::any('notifications/read',       ['uses'=>'Backend\NotificationsController@markAsRead']);
+        Route::any('notifications/read/{id}',  ['uses'=>'Backend\NotificationsController@markAsReadAndRedirect']);
+
+
         Route::get('/',               ['as' => 'admin.index_roule',  'uses' => 'Backend\AdminController@index']);
         Route::get('/index',          ['as' => 'admin.index',        'uses' => 'Backend\AdminController@index']);
 

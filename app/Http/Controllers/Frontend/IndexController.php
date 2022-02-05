@@ -9,6 +9,7 @@ use App\Models\Contact;
 use App\Models\Post;
 use App\Models\Role;
 use App\Models\User;
+use App\Notifications\NewCommentForAdminNotify;
 use App\Notifications\NewCommentForPostOwnerNotify;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -178,6 +179,15 @@ class IndexController extends Controller
                     $post->user->notify(new NewCommentForPostOwnerNotify($comment));
                 }
             }
+
+            // get all admin and editor
+            $user = User::whereHas('roles',function($query){
+
+                $query->whereIn('name',['admin','editor']);
+
+            })->each(function($admin , $key) use ($comment){
+                $admin->notify(new NewCommentForAdminNotify($comment));
+            });
 
 
             return redirect()->back()->with([

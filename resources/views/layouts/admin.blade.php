@@ -11,6 +11,8 @@
 
     <title>{{ config('app.name', 'Laravel') }} Dashboard</title>
 
+    <meta name="adminId" content="{{ auth()->check() ? auth()->id() : '' }}">
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -28,47 +30,50 @@
     <link href="{{ asset('frontend/js/summernote/summernote-bs4.min.css') }}" rel="stylesheet">
 
     @yield('style')
+    @livewireStyles
 </head>
 <body id="page-top">
 
-    <!-- Page Wrapper -->
-  <div id="wrapper">
+    <div id="app">
+        <!-- Page Wrapper -->
+            <div id="wrapper">
 
-    @include('partial.backend.sidebar')
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+                @include('partial.backend.sidebar')
+                <!-- Content Wrapper -->
+                <div id="content-wrapper" class="d-flex flex-column">
 
-        @include('partial.backend.header')
+                    @include('partial.backend.header')
 
-    <!-- Main Content -->
-      <div id="content">
+                <!-- Main Content -->
+                <div id="content">
 
 
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-            @include('partial.flash')
-            @yield('content')
-        </div>
-        <!-- /.container-fluid -->
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
+                        @include('partial.flash')
+                        @yield('content')
+                    </div>
+                    <!-- /.container-fluid -->
 
-      </div>
-      <!-- End of Main Content -->
+                </div>
+                <!-- End of Main Content -->
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; {{ config('app.name') }} 2020</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; {{ config('app.name') }} 2020</span>
+                    </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
 
+                </div>
+                <!-- End of Content Wrapper -->
+
+            </div>
+        <!-- End of Page Wrapper -->
     </div>
-    <!-- End of Content Wrapper -->
-
-  </div>
-  <!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
@@ -101,7 +106,7 @@
 
 
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
 
      <!-- Core plugin JavaScript-->
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
@@ -111,21 +116,16 @@
     <script src="{{ asset('backend/js/sb-admin-2.min.js') }}"></script>
     <script src="{{ asset('frontend/js/bootstrap-fileinput/js/plugins/piexif.min.js') }}"></script>
     <script src="{{ asset('frontend/js/bootstrap-fileinput/js/plugins/sortable.min.js') }}"></script>
-
     <script src="{{ asset('frontend/js/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
     <script src="{{ asset('frontend/js/bootstrap-fileinput/themes/fas/theme.min.js') }}"></script>
-
     <script src="{{ asset('frontend/js/summernote/summernote-bs4.min.js') }}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{ asset('backend/vendor/chart.js/Chart.min.js') }}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('backend/js/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('backend/js/demo/chart-pie-demo.js') }}"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     @yield('script')
+
+    @livewireScripts
+
+    @method('scripts')
 </body>
 </html>
