@@ -26,10 +26,28 @@
                                     <li class="post_separator">/</li>
                                     <li>{{ $post->created_at->format('M d Y') }}</li>
                                 </ul>
-                                <p>{!! Str::limit($post->description, 160, '...') !!}</p>
+                                <p>{!! Str::limit($post->description, 100, '...') !!}</p>
                                 <div class="blog__btn">
                                     <a href="{{ route('post.show', $post->slug) }}">read more</a>
                                 </div>
+
+                                @if($post->tags->count() > 0)
+
+                                <ul class="post__meta">
+                                    <li>Tags : </li>
+                                        @foreach ($post->tags as $tag)
+                                            <li>
+                                                <a href="{{ route('frontend.tag.posts', $tag->slug) }}">
+                                                    <span class="label label-info">
+                                                        {{ $tag->name }}
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </li>
+                                </ul>
+
+                                @endif
                             </div>
                         </article>
                         <!-- End Single Post -->

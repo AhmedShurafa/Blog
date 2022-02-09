@@ -120,6 +120,7 @@ Route::post('/contact-us',                 ['as' => 'addContact' , 'uses'=>'Fron
 // serach
 Route::get('/search',                      ['as' => 'frontend.search' ,         'uses' => 'Frontend\IndexController@search']);
 Route::get('/category/{category_slug}',    ['as' => 'frontend.category.posts' , 'uses' => 'Frontend\IndexController@category']);
+Route::get('/tag/{tag_slug}',              ['as' => 'frontend.tag.posts' , 'uses' => 'Frontend\IndexController@tag']);
 Route::get('/archive/{date}',              ['as' => 'frontend.archive.posts' ,  'uses' => 'Frontend\IndexController@archive']);
 Route::get('/author/{username}',           ['as' => 'frontend.author.posts' ,   'uses' => 'Frontend\IndexController@author']);
 
