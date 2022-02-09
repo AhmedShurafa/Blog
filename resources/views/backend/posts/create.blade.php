@@ -1,4 +1,10 @@
 @extends('layouts.admin')
+
+
+@section('style')
+    <link rel="stylesheet" href="{{ asset('backend/vendor/select2/css/select2.min.css') }}">
+@endsection
+
 @section('content')
 
     <!-- DataTales Example -->
@@ -40,6 +46,18 @@
                         @enderror
                     </div>
                 </div>
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('tags', 'Tags') !!}
+                <div class="my-2">
+                    <button type="button" class="btn btn-primary btn-xs" id="select_btn_tag">Select All</button>
+                    <button type="button" class="btn btn-primary btn-xs" id="deselect_btn_tag">Deselcet All</button>
+                </div>
+                {!! Form::select('tags[]', $tags->toArray(), old('tags'),['id'=>'select_all_tags', 'class'=>'select form-control' , 'multiple'=>'multiple']) !!}
+                @error('tags')
+                    <span class="text-danger">{{ $mesaage }}</span>
+                @enderror
             </div>
 
             <div class="row mb-3">
@@ -93,6 +111,7 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('backend/vendor/select2/js/select2.full.min.js') }}"></script>
 
     <script>
         $(function(){
@@ -108,6 +127,21 @@
                     ['insert', ['link', 'picture', 'video']],
                     ['view', ['fullscreen', 'codeview', 'help']]
                 ]
+            });
+
+            $('.select').select2({
+                tags:true,
+                minimumResultsForSearch:Infinity,
+            });
+
+            $("#select_btn_tag").click(function(){
+                $("#select_all_tags > option").prop('selected','selected');
+                $("#select_all_tags").trigger("change");
+            });
+
+            $("#deselect_btn_tag").click(function(){
+                $("#select_all_tags > option").prop('selected',"");
+                $("#select_all_tags").trigger("change");
             });
 
             $("#post-images").fileinput({

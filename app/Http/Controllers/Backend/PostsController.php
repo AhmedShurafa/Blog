@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\PostMedia;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
@@ -67,8 +68,9 @@ class PostsController extends Controller
      */
     public function create()
     {
+        $tags = Tag::pluck('name','id');
         $categories = Category::orderBy('id','desc')->pluck('name','id');
-        return view('backend.posts.create',compact('categories'));
+        return view('backend.posts.create',compact('categories','tags'));
     }
 
     /**
@@ -117,10 +119,25 @@ class PostsController extends Controller
                     'file_size' => $file_size,
                 ]);
             }
-
         }
+
+        if(count($request->tags) > 0){
+            $new_tags = [];
+            foreach($request->tags as $tag){
+                $tag = Tag::firstOrCreate([
+                    'id' => $tag
+                ],[
+                    'name' => $tag
+                ]);
+                $new_tags[]= $tag->id;
+            }
+            $post->tags()->sync($new_tags);
+        }
+
+
         if($request->status ==1){
             Cache::forget('recent_posts');
+            Cache::forget('global_tags');
         }
         return redirect()->route('admin.posts.index')->with([
             'message' => 'Post created Successfully',
@@ -136,10 +153,11 @@ class PostsController extends Controller
      */
     public function show($id)
     {
+        $tags = Tag::pluck('name','id');
         $post = Post::with(['media','category','user','comments'])
                 ->wherePostType('post')->find($id);
 
-        return view('backend.posts.show',compact('post'));
+        return view('backend.posts.show',compact('post','tags'));
     }
 
     /**
@@ -150,10 +168,12 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
+        $tags = Tag::pluck('name','id');
+
         $categories = Category::orderBy('id','desc')->pluck('name','id');
         $post = Post::with(['media','category'])->wherePostType('post')->find($id);
 
-        return view('backend.posts.edit',compact('categories','post'));
+        return view('backend.posts.edit',compact('categories','post','tags'));
     }
 
     /**
@@ -210,8 +230,23 @@ class PostsController extends Controller
                 }
             }
 
+            if(count($request->tags) > 0){
+                $new_tags = [];
+                foreach($request->tags as $tag){
+                    $tag = Tag::firstOrCreate([
+                        'id' => $tag
+                    ],[
+                        'name' => $tag
+                    ]);
+                    $new_tags[]= $tag->id;
+                }
+                $post->tags()->sync($new_tags);
+            }
+
             if($request->status ==1){
                 Cache::forget('recent_posts');
+                Cache::forget('global_tags');
+
             }
 
             return redirect()->route('admin.posts.index')->with([

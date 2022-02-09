@@ -2,6 +2,7 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ asset('frontend/js/summernote/summernote-bs4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/vendor/select2/css/select2.min.css') }}">
 @endsection
 @section('content')
     <!-- Start Blog Area -->
@@ -22,8 +23,22 @@
 
                     <div class="form-group">
                         {!! Form::label('description', 'Description') !!}
-                        {!! Form::textarea('description', old('description'),['class'=>'form-control summernote']) !!}
-                        @error('title')
+                        {!! Form::textarea('description', old('description'),['class'=>'form-control']) !!}
+                        @error('description')
+                            <span class="text-danger">{{ $mesaage }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('tags', 'Tags') !!}
+
+                        <div class="my-2">
+                            <button type="button" class="btn btn-primary btn-xs" id="select_btn_tag">Select All</button>
+                            <button type="button" class="btn btn-primary btn-xs" id="deselect_btn_tag">Deselcet All</button>
+                        </div>
+
+                        {!! Form::select('tags[]', $tags->toArray(), old('tags'),['id'=>'select_all_tags', 'class'=>'select form-control' , 'multiple'=>'multiple']) !!}
+                        @error('tags')
                             <span class="text-danger">{{ $mesaage }}</span>
                         @enderror
                     </div>
@@ -31,7 +46,7 @@
                     <div class="row mb-3">
                         <div class="col-4">
                             {!! Form::label('category_id', 'Category') !!}
-                            {!! Form::select('category_id', ['' => '----'] + $category->toArray(), old('comment_able'),['class'=>'form-control']) !!}
+                            {!! Form::select('category_id', ['' => '----'] + $category->toArray(), old('category_id'),['class'=>'form-control']) !!}
                             @error('category_id')
                                 <span class="text-danger">{{ $mesaage }}</span>
                             @enderror
@@ -74,6 +89,7 @@
 @section('script')
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="{{ asset('frontend/js/summernote/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('backend/vendor/select2/js/select2.full.min.js') }}"></script>
     <script>
         $(function(){
             $('.summernote').summernote({
@@ -99,6 +115,21 @@
                 showUpload:false,
                 overwriteInitial:false,
             })
+
+            $('.select').select2({
+                tags:true,
+                minimumResultsForSearch:Infinity,
+            });
+
+            $("#select_btn_tag").click(function(){
+                $("#select_all_tags > option").prop('selected','selected');
+                $("#select_all_tags").trigger("change");
+            });
+
+            $("#deselect_btn_tag").click(function(){
+                $("#select_all_tags > option").prop('selected',"");
+                $("#select_all_tags").trigger("change");
+            });
         });
     </script>
 @endsection
