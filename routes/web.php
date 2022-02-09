@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\Auth as FrontEnd;
 use App\Http\Controllers\Backend as Backend;
+use App\Http\Controllers\Backend\Auth\LoginController as AuthLoginController;
+use App\Http\Controllers\Frontend\Auth\LoginController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +25,12 @@ Route::get('/', ['as'=>'frontend.index' , 'uses' => 'Frontend\IndexController@in
 // Authentication user Route
 Route::get('/login',                            ['as' => 'frontend.show_login_form',        'uses' => 'Frontend\Auth\LoginController@showLoginForm']);
 Route::post('login',                            ['as' => 'frontend.login',                  'uses' => 'Frontend\Auth\LoginController@login']);
+
+Route::get('/auth/{providor}/redirect/','Frontend\Auth\LoginController@redirectToProvidor')->name('frontend.social');
+
+Route::get('/login/{providor}/callback/','Frontend\Auth\LoginController@handleProvidorCallback')->name('frontend.social_callback');
+
+
 Route::post('logout',                           ['as' => 'frontend.logout',                 'uses' => 'Frontend\Auth\LoginController@logout']);
 Route::get('register',                          ['as' => 'frontend.show_register_form',     'uses' => 'Frontend\Auth\RegisterController@showRegistrationForm']);
 Route::post('register',                         ['as' => 'frontend.register',               'uses' => 'Frontend\Auth\RegisterController@register']);
@@ -51,16 +60,15 @@ Route::group(['middleware' => 'verified'],function(){
 
     // this is route for comment
     Route::get('/comments' ,                        ['as' => 'users.comments',                  'uses'=>'Frontend\UsersController@show_comments']);
-
-    Route::get('/edit-comment/{comment_id}' ,             ['as' => 'users.comment.edit',             'uses'=>'Frontend\UsersController@edit_comment']);
-    Route::put('/update-comment/{comment_id}' ,           ['as' => 'users.comment.update',           'uses'=>'Frontend\UsersController@update_comment']);
-    Route::delete('/destroy-comment/{comment_id}' ,       ['as' => 'users.comment.destroy',           'uses'=>'Frontend\UsersController@destroy_comment']);
+    Route::get('/edit-comment/{comment_id}' ,       ['as' => 'users.comment.edit',             'uses'=>'Frontend\UsersController@edit_comment']);
+    Route::put('/update-comment/{comment_id}' ,     ['as' => 'users.comment.update',           'uses'=>'Frontend\UsersController@update_comment']);
+    Route::delete('/destroy-comment/{comment_id}' , ['as' => 'users.comment.destroy',           'uses'=>'Frontend\UsersController@destroy_comment']);
 
 
     // User notification
-    Route::any('user/notifications/get',                 ['as' => 'users.notification.get',  'uses'=>'Frontend\NotificationsController@getNotifications']);
-    Route::any('user/notifications/read',                ['as' => 'users.notification.read',  'uses'=>'Frontend\NotificationsController@markAsRead']);
-    Route::any('user/notifications/read/{id}',           ['as' => 'users.notification.get',  'uses'=>'Frontend\NotificationsController@markAsReadAndRedirect']);
+    Route::any('user/notifications/get',            ['as' => 'users.notification.get',  'uses'=>'Frontend\NotificationsController@getNotifications']);
+    Route::any('user/notifications/read',           ['as' => 'users.notification.read',  'uses'=>'Frontend\NotificationsController@markAsRead']);
+    Route::any('user/notifications/read/{id}',      ['as' => 'users.notification.get',  'uses'=>'Frontend\NotificationsController@markAsReadAndRedirect']);
 });
 
 // Authentication Admin Route
@@ -106,8 +114,8 @@ Route::group(['prefix'=>'admin'] , function (){
 });
 
 // Contact us
-Route::get('/contact-us' ,      ['as' => 'frontend.contact' , 'uses'=>'Frontend\IndexController@show_contact']);
-Route::post('/contact-us',      ['as' => 'addContact' , 'uses'=>'Frontend\IndexController@addContact']);
+Route::get('/contact-us' ,                 ['as' => 'frontend.contact' , 'uses'=>'Frontend\IndexController@show_contact']);
+Route::post('/contact-us',                 ['as' => 'addContact' , 'uses'=>'Frontend\IndexController@addContact']);
 
 // serach
 Route::get('/search',                      ['as' => 'frontend.search' ,         'uses' => 'Frontend\IndexController@search']);
@@ -116,9 +124,9 @@ Route::get('/archive/{date}',              ['as' => 'frontend.archive.posts' ,  
 Route::get('/author/{username}',           ['as' => 'frontend.author.posts' ,   'uses' => 'Frontend\IndexController@author']);
 
 // show pages
-Route::get('/{page}',               ['as' => 'page.show' , 'uses'=>'Frontend\IndexController@show_page']);
+Route::get('/{page}',                      ['as' => 'page.show' , 'uses'=>'Frontend\IndexController@show_page']);
 // show post
-Route::get('post/{post}',           ['as' => 'post.show' ,        'uses'=>'Frontend\IndexController@show_post']);
-Route::post('/post/comment/{slug}', ['as' => 'post.add_comment' , 'uses'=>'Frontend\IndexController@add_comment']);
+Route::get('post/{post}',                  ['as' => 'post.show' ,        'uses'=>'Frontend\IndexController@show_post']);
+Route::post('/post/comment/{slug}',        ['as' => 'post.add_comment' , 'uses'=>'Frontend\IndexController@add_comment']);
 
 

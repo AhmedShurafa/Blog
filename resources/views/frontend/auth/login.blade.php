@@ -40,6 +40,27 @@
                                     </label>
                                 </div>
                                 <a class="forget_pass" href="{{ route('password.request') }}">Lost your password?</a>
+
+                                <hr>
+                                <div class="form__btn mt-2">
+                                    <a href="{{ route('frontend.social', 'facebook') }}" style="background: #3b5998"
+                                    class="btn btn-block text-white">
+                                        <i class="fa fa-facebook-f"></i>
+                                        Login with Facebook
+                                    </a>
+                                    <a href="{{ route('frontend.social', 'instagram') }}" style="background: rgb(213, 81, 246)"
+                                    class="btn btn-block text-white">
+                                        <i class="fa fa-twitter"></i>
+                                        Login with instagram
+                                    </a>
+
+                                    <a href="{{ route('frontend.social', 'google') }}" style="background: #ea4335"
+                                     class="btn btn-block text-white">
+                                        <i class="fa fa-google fa-fw"></i>
+                                        Login with Google
+                                    </a>
+                                </div>
+
                             </div>
 
                         {!! Form::close() !!}
