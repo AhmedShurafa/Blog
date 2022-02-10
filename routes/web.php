@@ -101,6 +101,7 @@ Route::group(['prefix'=>'admin'] , function (){
 
         Route::resource('post_comments',    'Backend\PostCommentsController',   ['as' => 'admin']);
         Route::resource('post_categories',  'Backend\PostCategoriesController', ['as' => 'admin']);
+        Route::resource('post_tags',        'Backend\PostTagsController', ['as' => 'admin']);
 
         Route::resource('contact_us',       'Backend\ContactUsController',      ['as' => 'admin']);
 

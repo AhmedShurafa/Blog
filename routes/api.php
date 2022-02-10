@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\General\GeneralController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/chart/comments_chart','Backend\Api\ApiController@comments_chart');
 Route::get('/chart/users_chart'   ,'Backend\Api\ApiController@users_chart');
+////////////////////////////////////////////
+
+
+Route::get('/all_posts', [GeneralController::class ,'get_posts']);
+

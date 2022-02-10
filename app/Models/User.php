@@ -75,4 +75,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->status == 1 ? 'Active' : 'Inactive';
     }
+
+    public function userImage()
+    {
+        return $this->user_image != '' ? asset('asstes/users/'.$this->user_image) : asset('asstes/users/user.png');
+    }
 }
