@@ -58,14 +58,31 @@ class LoginController extends Controller
         return 'username';
     }
 
-    protected function authenticated(Request $request, $socialUser)
+    protected function authenticated(Request $request, $user)
     {
-        if($socialUser->status == 1){
+        if($user->status == 1){
+            if($request->wantsJson()){
+                $token = $user->createToken('token')->accessToken;
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Welcome to blogCms , Please check your email',
+                    'token' => $token,
+                ]);
+            }
             return redirect()->route('frontend.dashboard')->with([
                 'message' => 'Welcome to blogCms',
                 'alert-type' => 'success',
             ]);
+
         }else{
+
+            if($request->wantsJson()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Please Contcat BlogCms Admin',
+                ]);
+            }
+
             return redirect()->route('frontend.index')->with([
                 'message' => 'Please Contcat BlogCms Admin',
                 'alert-type' => 'warning',

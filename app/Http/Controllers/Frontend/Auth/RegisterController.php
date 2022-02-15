@@ -110,6 +110,16 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
+        if($request->wantsJson()){
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Welcome to blogCms , Please check your email',
+                // 'data' => $user,
+            ]);
+
+        }
+
         return redirect()->route('frontend.index')->with([
             'message' => 'Welcome to blogCms , Please check your email',
             'alert-type' => 'success',
