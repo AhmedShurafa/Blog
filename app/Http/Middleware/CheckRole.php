@@ -29,6 +29,7 @@ class CheckRole
 
                 if($route[0] != auth()->user()->roles->first()->allowed_route){
                     $path = $route[0] == auth()->user()->roles[0]->allowed_route ? $route[0].'.show_login_form' : '' . auth()->user()->roles[0]->allowed_route.'.index';
+
                     return redirect()->route($path);
                 }else{
                     return $next($request);

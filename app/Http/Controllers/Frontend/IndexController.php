@@ -157,7 +157,7 @@ class IndexController extends Controller
         $post = Post::whereSlug($slug)->whereStatus(1)->wherePostType('post')->first();
         if($post){
 
-            $user_id = auth()->check() ? auth()->id : null;
+            $user_id = auth()->check() ? auth()->user()->id : null;
 
             $data['name']       = $request->name;
             $data['email']      = $request->email;
@@ -174,7 +174,7 @@ class IndexController extends Controller
             // when add comment send notify for owner this post
             if($comment){
                 //if add comment in my post , dont send my notify when add comment
-                if(auth()->guest() || auth()->id != $post->user_id){
+                if(auth()->guest() || auth()->user()->id != $post->user_id){
                     // l want to get owner this post
                     $post->user->notify(new NewCommentForPostOwnerNotify($comment));
                 }

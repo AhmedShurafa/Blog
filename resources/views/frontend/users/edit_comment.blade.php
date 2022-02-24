@@ -32,7 +32,7 @@
                         <div class="col-3">
                             <div class="form-group">
                                 {!! Form::label('url', 'Website') !!}
-                                {!! Form::email('url', old('url',$comment->url),['class'=>'form-control summernote']) !!}
+                                {!! Form::url('url', old('url',$comment->url),['class'=>'form-control summernote']) !!}
                                 @error('url')
                                     <span class="text-danger">{{ $mesaage }}</span>
                                 @enderror

@@ -8,7 +8,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="userId" content="{{ auth()->check() ? auth()->id() : '' }}">
+    <meta name="userId" content="{{ auth()->check() ? auth()->user()->id : '' }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -47,7 +47,6 @@
             </main>
             @include('partial.frontend.footer')
 
-            <example-component></example-component>
         </div>
     </div>
 

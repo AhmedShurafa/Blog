@@ -16,7 +16,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 
-let token =document.head.querySelector("meta[name='csrf-token']");
+let token = document.head.querySelector('meta[name="csrf-token"]');
 if(token){
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 }else{
@@ -39,7 +39,8 @@ window.Echo = new Echo({
     forceTLS: true,
     wsHost: window.location.hostname,
     wsPort: 6001,
-    wssPort: 6002,
+    wssPort: 6001,
     disableStats: true,
-    encrypted: true,
+    // encrypted: true,
+    enabledTransports: ['ws', 'wss'],
 });

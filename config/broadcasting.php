@@ -39,9 +39,14 @@ return [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'useTLS' => true,
                 'encrypted' => true,
-                'host' => '127.0.0.1',
+                // 'host' => '127.0.0.1',
+                'host' => 'blog-cms.test',
                 'port' => 6001,
-                'scheme' => 'http'
+                'scheme' => 'https',
+                'curl_options' => [
+                    CURLOPT_SSL_VERIFYHOST => 0,
+                    CURLOPT_SSL_VERIFYPEER => 0,
+                ]
             ],
         ],
 

@@ -2190,6 +2190,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2203,7 +2205,7 @@ __webpack_require__.r(__webpack_exports__);
 
     this.getNotifications();
     var userId = $('meta[name="userId"]').attr('content');
-    Echo["private"]('App.User.' + userId).notification(function (notification) {
+    Echo["private"]('App.Models.User.' + userId).notification(function (notification) {
       _this.unread.unshift(notification);
 
       _this.unreadCount++;
@@ -2301,7 +2303,7 @@ try {
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['Content-Type'] = 'application/json';
-var token = document.head.querySelector("meta[name='csrf-token']");
+var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
@@ -2324,9 +2326,10 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   forceTLS: true,
   wsHost: window.location.hostname,
   wsPort: 6001,
-  wssPort: 6002,
+  wssPort: 6001,
   disableStats: true,
-  encrypted: true
+  // encrypted: true,
+  enabledTransports: ['ws', 'wss']
 });
 
 /***/ }),
@@ -39243,7 +39246,7 @@ process.umask = function() { return 0; };
 /***/ ((module) => {
 
 /*!
- * Pusher JavaScript Library v7.0.4
+ * Pusher JavaScript Library v7.0.6
  * https://pusher.com/
  *
  * Copyright 2020, Pusher
@@ -39832,7 +39835,7 @@ var ScriptReceivers = new ScriptReceiverFactory('_pusher_script_', 'Pusher.Scrip
 
 // CONCATENATED MODULE: ./src/core/defaults.ts
 var Defaults = {
-    VERSION: "7.0.4",
+    VERSION: "7.0.6",
     PROTOCOL: 7,
     wsPort: 80,
     wssPort: 443,
@@ -44080,17 +44083,21 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("li", { staticClass: "shopcart" }, [
-    _c("a", { staticClass: "cartbox_active", attrs: { href: "#" } }, [
-      _vm.unreadCount > 0
-        ? _c("span", { staticClass: "product_qun" }, [
-            _vm._v(_vm._s(_vm.unreadCount)),
-          ])
-        : _vm._e(),
-    ]),
+    _c(
+      "a",
+      { staticClass: "cartbox_active", attrs: { href: "javascript:vaoid(0)" } },
+      [
+        _vm.unreadCount > 0
+          ? _c("span", { staticClass: "product_qun" }, [
+              _vm._v(_vm._s(_vm.unreadCount)),
+            ])
+          : _vm._e(),
+      ]
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "block-minicart minicart__active" }, [
       _vm.unreadCount > 0
-        ? _c("div", { staticClass: "minicart-content-wrapper" }, [
+        ? _c("div", { staticClass: "minicart-content-wrapper py-0" }, [
             _c("div", { staticClass: "single__items" }, [
               _c(
                 "div",

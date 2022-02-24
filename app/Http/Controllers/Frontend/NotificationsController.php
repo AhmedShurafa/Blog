@@ -7,12 +7,17 @@ use Illuminate\Http\Request;
 
 class NotificationsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','web']);
+    }
+
     public function getNotifications()
     {
         return [
-            'read' => auth()->user()->readNotifications,
-            'unread' => auth()->user()->unreadNotifications,
-            'usertype' => auth()->user()->roles->first()->name,
+            'read'          => auth()->user()->readNotifications,
+            'unread'        => auth()->user()->unreadNotifications,
+            'usertype'      => auth()->user()->roles->first()->name,
         ];
     }
 
