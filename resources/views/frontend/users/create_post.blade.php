@@ -2,6 +2,9 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ asset('frontend/js/summernote/summernote-bs4.min.css') }}">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
+
 @endsection
 @section('content')
     <!-- Start Blog Area -->
@@ -74,6 +77,11 @@
 @section('script')
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="{{ asset('frontend/js/summernote/summernote-bs4.min.js') }}"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script type="text/javascript" src="cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
     <script>
         $(function(){
             $('.summernote').summernote({

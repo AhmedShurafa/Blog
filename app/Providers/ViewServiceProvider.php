@@ -100,7 +100,6 @@ class ViewServiceProvider extends ServiceProvider
             });
         }
 
-
         if(request()->is('admin/*')){
 
             Paginator::useBootstrap();

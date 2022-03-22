@@ -26,7 +26,7 @@ class RolesTableSeeder extends Seeder
         $admin = User::create([
             'name'              =>'Admin',
             'username'          =>'admin',
-            'email'             =>'admin@blog-cms.com',
+            'email'             =>'admin@admin.com',
             'mobile'            =>'0123456789',
             'email_verified_at' => Carbon::now(),
             'password'          =>bcrypt('123123123'),

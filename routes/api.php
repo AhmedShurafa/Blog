@@ -20,3 +20,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/chart/comments_chart','Backend\Api\ApiController@comments_chart');
 Route::get('/chart/users_chart'   ,'Backend\Api\ApiController@users_chart');
+// https://www.youtube.com/watch?v=M08_cKkgBo0
+// https://github.com/bodunadebiyi/Laravel-Google-Geocoder
+// https://investmentnovel.com/laravel-google-maps-example/
